@@ -1,0 +1,6 @@
+{
+  "PORT": 8083,
+  "HOST": "127.0.0.1",
+  "MONGODB_URI": "mongodb://localhost:27017/clients",
+  "CLIENTS": "*"
+}
