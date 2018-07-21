@@ -10,11 +10,13 @@ const server = new Hapi.Server({
 });
 
 routes.forEach(route => {
-  const mod = require(`../endpoints/${route.module}`);
+  const { method, path, module } = route;
+  const mod = require(`../endpoints/${module}`);
+  const { handler } = mod;
   const options = {
-    method: route.method,
-    path: route.path,
-    handler: mod.handler,
+    method,
+    path,
+    handler,
   };
 
   server.route(options);

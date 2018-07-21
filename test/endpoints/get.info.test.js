@@ -32,9 +32,10 @@ describe(`${method} ${endpoint}`, () => {
         done(err);
       } else {
         response.statusCode.should.equal(statusCode);
-        const body = response.body;
+        const { body } = response;
         const { name, version } = pkg;
-        should.deepEqual(body, { name, version });
+        const expectedBody = { name, version };
+        should.deepEqual(body, expectedBody);
         done();
       }
     });

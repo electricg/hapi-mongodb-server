@@ -9,56 +9,58 @@ describe('Utils', () => {
       {
         desc: 'should return empty array when input is a number',
         input: 1,
-        output: [],
+        expectedOutput: [],
       },
       {
         desc: 'should return empty array when input is a boolean',
         input: true,
-        output: [],
+        expectedOutput: [],
       },
       {
         desc: 'should return empty array when input is an object',
         input: {},
-        output: [],
+        expectedOutput: [],
       },
       {
         desc: 'should return empty array when input is an empty string',
         input: '',
-        output: [],
+        expectedOutput: [],
       },
       {
         desc: 'should return empty array when input is an empty array',
         input: [],
-        output: [],
+        expectedOutput: [],
       },
       {
         desc: 'should trim spaces from a string',
         input: ' aaaa , bbbb , cccc ',
-        output: ['aaaa', 'bbbb', 'cccc'],
+        expectedOutput: ['aaaa', 'bbbb', 'cccc'],
       },
       {
         desc: 'should trim spaces from an array',
         input: [' aaaa ', ' bbbb ', ' cccc '],
-        output: ['aaaa', 'bbbb', 'cccc'],
+        expectedOutput: ['aaaa', 'bbbb', 'cccc'],
       },
       {
         desc:
           'should return an array with one item from a string with no separators',
         input: 'aaaa',
-        output: ['aaaa'],
+        expectedOutput: ['aaaa'],
       },
       {
         desc:
           'should filter out items in the array that are not strings or empty strings',
         input: [' aaaa ', 1, true, {}, null, '', 'bbbb'],
-        output: ['aaaa', 'bbbb'],
+        expectedOutput: ['aaaa', 'bbbb'],
       },
     ];
 
     o.forEach(item => {
-      it(item.desc, done => {
-        const output = utils.formatOrigins(item.input);
-        should.deepEqual(output, item.output);
+      const { desc, input, expectedOutput } = item;
+
+      it(desc, done => {
+        const output = utils.formatOrigins(input);
+        should.deepEqual(output, expectedOutput);
         done();
       });
     });
@@ -70,38 +72,40 @@ describe('Utils', () => {
         desc: 'should return null error and empty details',
         msg: null,
         err: null,
-        output: { status: 0, error: null, details: '' },
+        expectedOutput: { status: 0, error: null, details: '' },
       },
       {
         desc: 'should return error and empty details',
         msg: 'xxx',
         err: null,
-        output: { status: 0, error: 'xxx', details: '' },
+        expectedOutput: { status: 0, error: 'xxx', details: '' },
       },
       {
         desc: 'should return error and details property from err.message',
         msg: 'xxx',
         err: { message: 'yyy' },
-        output: { status: 0, error: 'xxx', details: 'yyy' },
+        expectedOutput: { status: 0, error: 'xxx', details: 'yyy' },
       },
       {
         desc:
           'should return error and details property from err.statusCode and err.statusMessage',
         msg: 'xxx',
         err: { statusCode: 200, statusMessage: 'yyy' },
-        output: { status: 0, error: 'xxx', details: '200 yyy' },
+        expectedOutput: { status: 0, error: 'xxx', details: '200 yyy' },
       },
       {
         desc: 'should return error and details property of empty string',
         msg: 'xxx',
         err: { zzz: 'yyy' },
-        output: { status: 0, error: 'xxx', details: '' },
+        expectedOutput: { status: 0, error: 'xxx', details: '' },
       },
     ];
     o.forEach(item => {
-      it(item.desc, done => {
-        const output = utils.formatError(item.msg, item.err);
-        should.deepEqual(output, item.output);
+      const { desc, msg, err, expectedOutput } = item;
+
+      it(desc, done => {
+        const output = utils.formatError(msg, err);
+        should.deepEqual(output, expectedOutput);
         done();
       });
     });

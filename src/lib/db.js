@@ -40,18 +40,22 @@ module.exports.ObjectId = mongoose.Types.ObjectId;
 db.on('close', () => {
   utils.log('Connection to MongoDB closed');
 });
+
 db.on('connected', () => {
   utils.log(
     'Connection established to MongoDB at:',
     `mongodb://${db.host}:${db.port}/${db.name}`
   );
 });
+
 db.on('error', err => {
   utils.log('Error', `${err.name}: ${err.message}`);
 });
+
 db.on('disconnected', () => {
   utils.log('Error', 'Lost MongoDB connection');
 });
+
 db.on('reconnected', () => {
   utils.log('Reconnected to MongoDB');
 });
