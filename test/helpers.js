@@ -25,7 +25,7 @@ module.exports.dbStart = async () => {
 module.exports.dbStop = async () => {
   await db.close();
   // https://github.com/Mockgoose/Mockgoose/issues/33#issuecomment-321835220
-  mockgoose.mongodHelper.mongoBin.childProcess.kill('SIGKILL');
+  // mockgoose.mongodHelper.mongoBin.childProcess.kill('SIGKILL');
 };
 
 module.exports.dbReset = async () => {
@@ -62,4 +62,4 @@ after(async () => {
 });
 
 // https://github.com/nodejs/node/issues/9523#issuecomment-259303079
-process.on('unhandledRejection', r => console.log(r));
+// process.on('unhandledRejection', r => console.log(r));
