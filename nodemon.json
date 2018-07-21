@@ -1,0 +1,5 @@
+{
+  "verbose": true,
+  "ext": "*.json, *.js, *.html",
+  "ignore": ["node_modules/*", "coverage/*", "test/*"]
+}

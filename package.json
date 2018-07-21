@@ -1,0 +1,47 @@
+{
+  "name": "hapi-mongodb-server",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Basic API server made with hapi and MongoDB",
+  "main": "index.js",
+  "scripts": {
+    "dev": "./node_modules/.bin/nodemon",
+    "start": "node .",
+    "covertest": "rm -rf coverage && ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha",
+    "test": "npm run covertest",
+    "posttest": "./node_modules/.bin/istanbul check-coverage --statements 100 --functions 100 --branches 100 --lines 100"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/electricg/hapi-mongodb-server.git"
+  },
+  "keywords": [],
+  "author": "Giulia Alfonsi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/electricg/hapi-mongodb-server/issues"
+  },
+  "homepage": "https://github.com/electricg/hapi-mongodb-server#readme",
+  "dependencies": {
+    "hapi": "^17.5.2",
+    "joi": "^13.4.0",
+    "mongoose": "^5.2.4",
+    "nconf": "^0.10.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.6",
+    "eslint": "^5.2.0",
+    "eslint-plugin-prettier": "^2.6.2",
+    "istanbul": "^0.4.5",
+    "mocha": "^5.2.0",
+    "mockgoose": "^7.3.5",
+    "nock": "^9.4.2",
+    "nodemon": "^1.18.3",
+    "prettier": "^1.13.7",
+    "prettier-eslint": "^8.8.2",
+    "request": "^2.87.0",
+    "rewire": "^4.0.1",
+    "should": "^13.2.1",
+    "sinon": "^6.1.4"
+  }
+}
