@@ -10,7 +10,6 @@ const server = require('../src/lib/server');
 
 const mongoose = new Mongoose();
 const mockgoose = new Mockgoose(mongoose);
-mongoose.Promise = global.Promise;
 
 module.exports.config = config;
 module.exports.db = db;

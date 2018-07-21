@@ -5,8 +5,6 @@ const utils = require('./utils');
 let db = mongoose.connection;
 
 const connect = async () => {
-  mongoose.Promise = global.Promise;
-
   await mongoose.connect(
     config.get('mongodbUrl'),
     {
