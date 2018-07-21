@@ -172,15 +172,14 @@ describe('database', () => {
       });
     });
 
-    // it('should find no document', done => {
-    //     const id = '5a330936df7aa0562d15212b';
-    //     collection.findOne({ _id: helpers.db.ObjectId(id) }, (err, res) => {
-    //         const _id = res._id.toString();
-    //         res.a.should.equal(1);
-    //         _id.should.equal(id);
-    //         done();
-    //     });
-    // });
+    it('should find no document', done => {
+      const id = '5a330936df7aa0562d15212b';
+      collection.findOne({ _id: helpers.db.ObjectId(id) }, (err, res) => {
+        should.deepEqual(err, null);
+        should.deepEqual(res, null);
+        done();
+      });
+    });
 
     it('should find a single document', done => {
       collection.insert({ a: 1 }, (err, res) => {
@@ -383,6 +382,13 @@ describe('database', () => {
       res2.result.n.should.be.above(0);
     });
 
+    it('should find no document', async () => {
+      // no need to add a catch as the test will automatically fail in that case
+      const id = '5a330936df7aa0562d15212b';
+      const res = await collection.findOne({ _id: helpers.db.ObjectId(id) });
+      should.deepEqual(res, null);
+    });
+
     it('should find a single document', async () => {
       // no need to add a catch as the test will automatically fail in that case
       const res = await collection.insert({ a: 1 });
@@ -515,6 +521,17 @@ describe('database', () => {
         .then(res => {
           res.result.ok.should.equal(1);
           res.result.n.should.be.above(0);
+          done();
+        })
+        .catch(done);
+    });
+
+    it('should find no document', done => {
+      const id = '5a330936df7aa0562d15212b';
+      collection
+        .findOne({ _id: helpers.db.ObjectId(id) })
+        .then(res => {
+          should.deepEqual(res, null);
           done();
         })
         .catch(done);
