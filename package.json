@@ -3,12 +3,12 @@
   "private": true,
   "version": "1.0.0",
   "description": "Basic API server made with hapi and MongoDB",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "coverage": "rm -rf coverage && nyc mocha test/{**,**/*}/*.test.js",
-    "dev": "./node_modules/.bin/nodemon",
+    "dev": "./node_modules/.bin/nodemon server.js",
     "giulia": "mocha test/lib/db.test.js",
-    "start": "node .",
+    "start": "node server.js",
     "test": "npm run coverage"
   },
   "repository": {
