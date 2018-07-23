@@ -12,28 +12,21 @@ const mongoose = new Mongoose();
 const mockgoose = new Mockgoose(mongoose);
 
 const mongodbUrl = config.get('mongodbUrl');
-const testMongodbUrl = `${mongodbUrl}-test`;
-
-let getConfigStub;
+module.exports.testMongodbUrl = `${mongodbUrl}-test`;
 
 module.exports.config = config;
 module.exports.db = db;
 
 module.exports.baseUrl = `http://${config.get('host')}:${config.get('port')}`;
 
-module.exports.dbStart = async () => {
-  // Doing this because otherwise Mockgoose connects to the real MongoDB if this is active
-  getConfigStub = sinon.stub(config, 'get');
-  getConfigStub.withArgs('mongodbUrl').returns(testMongodbUrl);
-
+module.exports.dbStart = async ({ uri, options }) => {
   await mockgoose.prepareStorage();
-  await db.connect();
+  await db.connect({ uri, options });
 };
 
 module.exports.dbStop = async () => {
   await db.db.dropDatabase();
   await db.close();
-  getConfigStub.restore();
   // Probably not needed anymore, but keeping it just in case
   // https://github.com/Mockgoose/Mockgoose/issues/33#issuecomment-321835220
   // mockgoose.mongodHelper.mongoBin.childProcess.kill('SIGKILL');

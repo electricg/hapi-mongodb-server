@@ -1,19 +1,33 @@
 const mongoose = require('mongoose');
-const config = require('./config');
 const utils = require('./utils');
 
 let db = mongoose.connection;
 
-const connect = async () => {
+let mongodbUri = '';
+let mongodbOptions = {
+  autoReconnect: true,
+  connectTimeoutMS: 3600000,
+  keepAlive: 3600000,
+  socketTimeoutMS: 3600000,
+  useNewUrlParser: true,
+};
+
+const prepareSettings = (uri, options) => {
+  if (uri) {
+    mongodbUri = uri;
+  }
+
+  if (options) {
+    mongodbOptions = { ...mongodbOptions, ...options };
+  }
+};
+
+const connect = async ({ uri, options } = {}) => {
+  prepareSettings(uri, options);
+
   await mongoose.connect(
-    config.get('mongodbUrl'),
-    {
-      autoReconnect: true,
-      connectTimeoutMS: 3600000,
-      keepAlive: 3600000,
-      socketTimeoutMS: 3600000,
-      useNewUrlParser: true,
-    }
+    mongodbUri,
+    mongodbOptions
   );
 };
 

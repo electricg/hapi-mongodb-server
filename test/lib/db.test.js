@@ -2,7 +2,7 @@ const helpers = require('../helpers');
 
 describe('database', () => {
   before(async () => {
-    await helpers.dbStart();
+    await helpers.dbStart({ uri: helpers.testMongodbUrl });
   });
 
   after(async () => {
@@ -59,7 +59,10 @@ describe('database', () => {
           helpers.utilsLogStub
             .withArgs('Error', 'Lost MongoDB connection')
             .calledOnce.should.equal(true);
-          return helpers.db.connect();
+          return helpers.db.connect({
+            uri: helpers.testMongodbUrl,
+            options: {},
+          });
         })
         .then(() => {
           helpers.utilsLogStub
