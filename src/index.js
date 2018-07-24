@@ -4,8 +4,9 @@ const db = require('./lib/db');
 const config = require('./lib/config');
 
 module.exports.start = async () => {
+  db.setup({ uri: config.get('mongodbUrl') });
   await db
-    .connect({ uri: config.get('mongodbUrl') })
+    .connect()
     .then(() => server.start())
     .then(() => {
       utils.log('The fake api server is ready!');

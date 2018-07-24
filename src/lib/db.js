@@ -12,7 +12,7 @@ let mongodbOptions = {
   useNewUrlParser: true,
 };
 
-const prepareSettings = (uri, options) => {
+const setup = ({ uri, options } = {}) => {
   if (uri) {
     mongodbUri = uri;
   }
@@ -22,9 +22,7 @@ const prepareSettings = (uri, options) => {
   }
 };
 
-const connect = async ({ uri, options } = {}) => {
-  prepareSettings(uri, options);
-
+const connect = async () => {
   await mongoose.connect(
     mongodbUri,
     mongodbOptions
@@ -42,6 +40,7 @@ const reconnect = async () => {
   }
 };
 
+module.exports.setup = setup;
 module.exports.connect = connect;
 module.exports.reconnect = reconnect;
 module.exports.close = close;

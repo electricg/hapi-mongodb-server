@@ -9,6 +9,64 @@ describe('database', () => {
     await helpers.dbStop();
   });
 
+  describe('MongoDB setup', () => {
+    before(async () => {
+      await helpers.dbStop();
+    });
+
+    afterEach(async () => {
+      await helpers.dbStop();
+    });
+
+    after(async () => {
+      await helpers.dbStart({ uri: helpers.testMongodbUrl });
+    });
+
+    it('should set the uri when parameter is passed', async () => {
+      const expectedDbName = 'xxx';
+      helpers.db.setup({ uri: `mongodb://localhost:27017/${expectedDbName}` });
+      await helpers.db.connect();
+      should.deepEqual(helpers.db.db.name, expectedDbName);
+    });
+
+    it('should not set the uri when parameter is not passed', async () => {
+      const expectedDbName = 'xxx';
+      const expectedDbPort = 27017;
+      const expectedDbHost = 'localhost';
+      helpers.db.setup({ uri: '' });
+      await helpers.db.connect();
+      should.deepEqual(helpers.db.db.name, expectedDbName);
+      should.deepEqual(helpers.db.db.port, expectedDbPort);
+      should.deepEqual(helpers.db.db.host, expectedDbHost);
+    });
+
+    it('should set the options when parameter is passed', async () => {
+      const expectedDbOptions = {
+        connectTimeoutMS: 3500000,
+      };
+      helpers.db.setup({ options: expectedDbOptions });
+      await helpers.db.connect();
+      should.deepEqual(
+        helpers.db.db._connectionOptions.connectTimeoutMS,
+        expectedDbOptions.connectTimeoutMS
+      );
+    });
+
+    it('should not set the options when parameter is not passed', async () => {
+      const expectedDbOptions = {};
+      helpers.db.setup({ options: expectedDbOptions });
+      await helpers.db.connect();
+      should.deepEqual(helpers.db.db._connectionOptions.keepAlive, 3600000);
+    });
+
+    it('should not set anything when nothing is passed', async () => {
+      helpers.db.setup();
+      await helpers.db.connect();
+      should.deepEqual(helpers.db.db._connectionOptions.keepAlive, 3600000);
+      should.deepEqual(helpers.db.db.name, 'xxx');
+    });
+  });
+
   describe('MongoDB', () => {
     it('should log fake error event', done => {
       helpers.db.db.emit(
@@ -59,10 +117,7 @@ describe('database', () => {
           helpers.utilsLogStub
             .withArgs('Error', 'Lost MongoDB connection')
             .calledOnce.should.equal(true);
-          return helpers.db.connect({
-            uri: helpers.testMongodbUrl,
-            options: {},
-          });
+          return helpers.db.connect();
         })
         .then(() => {
           helpers.utilsLogStub

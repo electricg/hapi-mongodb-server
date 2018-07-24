@@ -21,7 +21,8 @@ module.exports.baseUrl = `http://${config.get('host')}:${config.get('port')}`;
 
 module.exports.dbStart = async ({ uri, options }) => {
   await mockgoose.prepareStorage();
-  await db.connect({ uri, options });
+  db.setup({ uri, options });
+  await db.connect();
 };
 
 module.exports.dbStop = async () => {
@@ -51,6 +52,9 @@ module.exports.serverStop = async () => {
 let utilsLogStub = {};
 const activateUtilsLogStub = () => {
   utilsLogStub = sinon.stub(utils, 'log').callsFake(() => {});
+  // utilsLogStub = sinon.stub(utils, 'log').callsFake((...args) => {
+  //   console.log(args.join(' '));
+  // });
 };
 activateUtilsLogStub();
 module.exports.utilsLogStub = utilsLogStub;
