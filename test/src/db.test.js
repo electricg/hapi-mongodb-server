@@ -1,6 +1,6 @@
 const helpers = require('../helpers');
 
-describe('database', () => {
+describe('Database', () => {
   before(async () => {
     await helpers.dbStart({ uri: helpers.testMongodbUrl });
   });
