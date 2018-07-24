@@ -1,14 +1,14 @@
 const request = require('request');
 const rewire = require('rewire');
 
-const helpers = require('../helpers');
-const pkg = require('../../package.json');
+const helpers = require('../../helpers');
+const pkg = require('../../../package.json');
 
 const endpoint = '/';
 const method = 'GET';
 
 describe(`${method} ${endpoint}`, () => {
-  const _server = rewire('../../src/lib/server');
+  const _server = rewire('../../../src/server');
 
   before(async () => {
     _server.init({

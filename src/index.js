@@ -1,19 +1,13 @@
-const utils = require('./lib/utils');
-const server = require('./lib/server');
-const db = require('./lib/db');
-const config = require('./lib/config');
+const utils = require('./utils');
+const server = require('./server');
+const db = require('./db');
 
-module.exports.start = async () => {
-  db.setup({ uri: config.get('mongodbUrl') });
+module.exports.start = async options => {
+  db.setup(options.db);
   await db
     .connect()
     .then(() => {
-      server.init({
-        port: config.get('port'),
-        host: config.get('host'),
-        origin: config.get('allowedOrigins'),
-        routes: config.get('routes'),
-      });
+      server.init(options.server);
       return server.start();
     })
     .then(() => {

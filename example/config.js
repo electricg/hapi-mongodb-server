@@ -1,7 +1,7 @@
 const nconf = require('nconf');
-const utils = require('./utils');
+const utils = require('../src/utils');
 
-const pkg = require('../../package');
+const pkg = require('../package');
 const { name } = pkg;
 const routes = require('./routes');
 
@@ -14,7 +14,7 @@ const DEFAULT = {
 
 nconf
   .env()
-  .file(`${__dirname}/../config.json`)
+  .file(`${__dirname}/config.json`)
   .defaults(DEFAULT);
 
 // some of the settings need parsing, so we create a public layer accessible to the application, while hiding the original ones

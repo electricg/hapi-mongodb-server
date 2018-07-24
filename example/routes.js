@@ -8,7 +8,7 @@ const list = [
 
 const routes = list.map(route => {
   const { method, path, module } = route;
-  const mod = require(`../endpoints/${module}`);
+  const mod = require(`./endpoints/${module}`);
   const { handler } = mod;
   const options = {
     method,

@@ -3,10 +3,10 @@ const sinon = require('sinon');
 const Mongoose = require('mongoose').Mongoose;
 const Mockgoose = require('mockgoose').Mockgoose;
 
-const config = require('../src/lib/config');
-const utils = require('../src/lib/utils');
-const db = require('../src/lib/db');
-const server = require('../src/lib/server');
+const config = require('../example/config');
+const utils = require('../src/utils');
+const db = require('../src/db');
+const server = require('../src/server');
 
 const mongoose = new Mongoose();
 const mockgoose = new Mockgoose(mongoose);

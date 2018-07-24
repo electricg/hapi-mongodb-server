@@ -1,6 +1,6 @@
 const sinon = require('sinon');
 
-const utils = require('../../src/lib/utils');
+const utils = require('../../src/utils');
 const helpers = require('../helpers');
 
 describe('Utils', () => {

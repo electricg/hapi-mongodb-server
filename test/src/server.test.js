@@ -6,7 +6,7 @@ const pkg = require('../../package.json');
 const helpers = require('../helpers');
 
 describe('API Server', () => {
-  const _server = rewire('../../src/lib/server');
+  const _server = rewire('../../src/server');
 
   before(() => {
     _server.init({

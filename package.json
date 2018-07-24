@@ -6,10 +6,15 @@
   "main": "src/index.js",
   "scripts": {
     "coverage": "rm -rf coverage && nyc mocha test/{**,**/*}/*.test.js",
-    "dev": "./node_modules/.bin/nodemon server.js",
-    "giulia": "mocha test/lib/db.test.js",
-    "start": "node server.js",
+    "dev": "./node_modules/.bin/nodemon example/server.js",
+    "giulia": "mocha test/src/db.test.js",
+    "start": "node example/server.js",
     "test": "npm run coverage"
+  },
+  "directories": {
+    "lib": "src",
+    "example": "example",
+    "test": "test"
   },
   "repository": {
     "type": "git",
