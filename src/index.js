@@ -7,7 +7,15 @@ module.exports.start = async () => {
   db.setup({ uri: config.get('mongodbUrl') });
   await db
     .connect()
-    .then(() => server.start())
+    .then(() => {
+      server.init({
+        port: config.get('port'),
+        host: config.get('host'),
+        origin: config.get('allowedOrigins'),
+        routes: config.get('routes'),
+      });
+      return server.start();
+    })
     .then(() => {
       utils.log('The fake api server is ready!');
     })

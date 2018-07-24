@@ -3,6 +3,7 @@ const utils = require('./utils');
 
 const pkg = require('../../package');
 const { name } = pkg;
+const routes = require('./routes');
 
 const DEFAULT = {
   PORT: 8083,
@@ -21,6 +22,7 @@ nconf.set('public:port', ~~nconf.get('PORT'));
 nconf.set('public:host', nconf.get('HOST'));
 nconf.set('public:mongodbUrl', nconf.get('MONGODB_URI'));
 nconf.set('public:allowedOrigins', utils.formatOrigins(nconf.get('CLIENTS')));
+nconf.set('public:routes', routes);
 
 module.exports.get = param => {
   return nconf.get(`public:${param}`);

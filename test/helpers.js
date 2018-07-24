@@ -42,6 +42,12 @@ module.exports.dbReset = async () => {
 };
 
 module.exports.serverStart = async () => {
+  server.init({
+    port: config.get('port'),
+    host: config.get('host'),
+    origin: config.get('allowedOrigins'),
+    routes: config.get('routes'),
+  });
   await server.start();
 };
 

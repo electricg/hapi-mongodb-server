@@ -11,6 +11,12 @@ describe(`${method} ${endpoint}`, () => {
   const _server = rewire('../../src/lib/server');
 
   before(async () => {
+    _server.init({
+      port: helpers.config.get('port'),
+      host: helpers.config.get('host'),
+      origin: helpers.config.get('allowedOrigins'),
+      routes: helpers.config.get('routes'),
+    });
     await _server.start();
   });
 

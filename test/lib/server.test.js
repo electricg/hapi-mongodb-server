@@ -8,6 +8,15 @@ const helpers = require('../helpers');
 describe('API Server', () => {
   const _server = rewire('../../src/lib/server');
 
+  before(() => {
+    _server.init({
+      port: helpers.config.get('port'),
+      host: helpers.config.get('host'),
+      origin: helpers.config.get('allowedOrigins'),
+      routes: helpers.config.get('routes'),
+    });
+  });
+
   afterEach(async () => {
     await helpers.serverStop();
     await _server.stop();
