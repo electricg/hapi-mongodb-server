@@ -4,6 +4,11 @@ const list = [
     path: '/',
     module: 'get.info',
   },
+  {
+    method: 'GET',
+    path: '/items',
+    module: 'get.items',
+  },
 ];
 
 const routes = list.map(route => {

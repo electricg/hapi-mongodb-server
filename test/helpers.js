@@ -16,6 +16,7 @@ module.exports.testMongodbUrl = `${mongodbUrl}-test`;
 
 module.exports.config = config;
 module.exports.db = db;
+module.exports.collectionItems = db.db.collection('items');
 
 module.exports.baseUrl = `http://${config.get('host')}:${config.get('port')}`;
 
