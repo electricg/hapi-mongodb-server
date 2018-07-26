@@ -10,6 +10,11 @@ const list = [
     module: 'get.items',
   },
   {
+    method: 'POST',
+    path: '/item',
+    module: 'post.item',
+  },
+  {
     method: 'GET',
     path: '/item/{id}',
     module: 'get.item',
@@ -23,11 +28,6 @@ const list = [
     method: 'PATCH',
     path: '/item/{id}',
     module: 'patch.item',
-  },
-  {
-    method: 'POST',
-    path: '/item/{id}',
-    module: 'post.item',
   },
   {
     method: 'PUT',
