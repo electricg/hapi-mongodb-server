@@ -31,6 +31,11 @@ const list = [
   },
   {
     method: 'PUT',
+    path: '/item',
+    module: 'put.item',
+  },
+  {
+    method: 'PUT',
     path: '/item/{id}',
     module: 'put.item',
   },
