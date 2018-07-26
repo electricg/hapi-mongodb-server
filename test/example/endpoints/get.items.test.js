@@ -4,10 +4,10 @@ const sinon = require('sinon');
 const helpers = require('../../helpers');
 const collection = require('../../../example/collections/items');
 
-var endpoint = '/items';
-var method = 'GET';
+const endpoint = '/items';
+const method = 'GET';
 
-describe(`${method} ${endpoint} enabled`, () => {
+describe(`${method} ${endpoint}`, () => {
   const _server = rewire('../../../src/server');
 
   before(async () => {
@@ -105,7 +105,7 @@ describe(`${method} ${endpoint} enabled`, () => {
     };
     const expectedStatusCode = 200;
 
-    request(options, function(err, response) {
+    request(options, (err, response) => {
       if (err) {
         done(err);
       } else {

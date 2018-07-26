@@ -38,8 +38,8 @@ module.exports.get = get;
 
 module.exports.list = (query, projection) => {
   return new Promise((resolve, reject) => {
-    var _query = query || {};
-    var _projection = projection || {};
+    const _query = query || {};
+    const _projection = projection || {};
     collection
       .find(_query, _projection)
       .toArray()
