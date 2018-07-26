@@ -14,6 +14,26 @@ const list = [
     path: '/item/{id}',
     module: 'get.item',
   },
+  {
+    method: 'DELETE',
+    path: '/item/{id}',
+    module: 'delete.item',
+  },
+  {
+    method: 'PATCH',
+    path: '/item/{id}',
+    module: 'patch.item',
+  },
+  {
+    method: 'POST',
+    path: '/item/{id}',
+    module: 'post.item',
+  },
+  {
+    method: 'PUT',
+    path: '/item/{id}',
+    module: 'put.item',
+  },
 ];
 
 const routes = list.map(route => {
