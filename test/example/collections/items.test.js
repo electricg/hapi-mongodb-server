@@ -18,11 +18,13 @@ describe('Collection items', () => {
 
   describe('Add', () => {
     it('should succeed', done => {
+      const expectedBody = { test: true };
       collection
-        .add({ test: true })
+        .add(expectedBody)
         .then(res => {
-          const { test } = res;
-          test.should.equal(true);
+          const { _id, ...body } = res;
+          should.deepEqual(body, expectedBody);
+          _id.should.not.equal(null);
           done();
         })
         .catch(done);
@@ -42,8 +44,9 @@ describe('Collection items', () => {
         });
       });
 
+      const expectedBody = { test: true };
       collection
-        .add({ test: true })
+        .add(expectedBody)
         .then(() => {
           revert();
           done('There should be an error');
@@ -56,11 +59,12 @@ describe('Collection items', () => {
     });
 
     it('should fail when there is a db error', done => {
+      const expectedBody = { test: true };
       collection
-        .add({ test: true })
+        .add(expectedBody)
         .then(res => {
           const id = res._id;
-          return collection.add({ _id: id, test: true });
+          return collection.add({ _id: id, ...expectedBody });
         })
         .then(() => {
           done('There should be an error');
@@ -77,13 +81,14 @@ describe('Collection items', () => {
 
   describe('Get', () => {
     it('should succeed', done => {
+      const expectedBody = { test: true };
       let _res;
       collection
-        .add({ test: true })
+        .add(expectedBody)
         .then(res => {
           _res = res;
-          const { _id, test } = res;
-          test.should.equal(true);
+          const { _id, ...body } = res;
+          should.deepEqual(body, expectedBody);
 
           return collection.get(_id);
         })
@@ -142,18 +147,20 @@ describe('Collection items', () => {
     });
 
     it('should succeed and return an array', done => {
+      const expectedBody = { test: true };
       collection
-        .add({ test: true })
-        .then(collection.add({ test: true }))
+        .add(expectedBody)
+        .then(collection.add(expectedBody))
         .then(() => {
           return collection.list();
         })
         .then(res => {
           res.length.should.equal(2);
-          res[0].test.should.equal(true);
-          res[1].test.should.equal(true);
-          res[0]._id.should.not.equal(null);
-          res[1]._id.should.not.equal(null);
+          res.forEach(r => {
+            const { _id, ...body } = r;
+            should.deepEqual(body, expectedBody);
+            _id.should.not.equal(null);
+          });
           done();
         })
         .catch(done);
@@ -188,12 +195,12 @@ describe('Collection items', () => {
 
   describe('Patch', () => {
     it('should succeed', done => {
-      const body = { test: true };
+      const expectedBody = { test: true };
       const addBody = { status: 0 };
       let id;
 
       collection
-        .add(body)
+        .add(expectedBody)
         .then(res => {
           const { _id } = res;
           id = _id;
@@ -202,7 +209,7 @@ describe('Collection items', () => {
         .then(res => {
           should.deepEqual(res, {
             _id: id,
-            ...body,
+            ...expectedBody,
             ...addBody,
           });
           done();
@@ -212,10 +219,10 @@ describe('Collection items', () => {
 
     it('should fail when document is not found', done => {
       const id = 'aaaaaaaaaaaaaaaaaaaaaaaa';
-      const body = { test: true };
+      const expectedBody = { test: true };
 
       collection
-        .patch({ id, body })
+        .patch({ id, expectedBody })
         .then(() => {
           done('There should be an error');
         })
@@ -226,7 +233,7 @@ describe('Collection items', () => {
     });
 
     it('should fail when no document has been updated', done => {
-      const body = { test: true };
+      const expectedBody = { test: true };
       const addBody = { status: 0 };
 
       const _collection = rewire('../../../example/collections/items');
@@ -243,7 +250,7 @@ describe('Collection items', () => {
       });
 
       collection
-        .add(body)
+        .add(expectedBody)
         .then(res => {
           const { _id } = res;
           return collection.patch({ id: _id, body: addBody });
@@ -260,7 +267,7 @@ describe('Collection items', () => {
     });
 
     it('should fail when there is a db error', done => {
-      const body = { test: true };
+      const expectedBody = { test: true };
 
       const _collection = rewire('../../../example/collections/items');
 
@@ -271,10 +278,10 @@ describe('Collection items', () => {
       });
 
       collection
-        .add(body)
+        .add(expectedBody)
         .then(res => {
           const { _id } = res;
-          return collection.patch({ id: _id, body });
+          return collection.patch({ id: _id, expectedBody });
         })
         .then(() => {
           revert();
@@ -291,25 +298,28 @@ describe('Collection items', () => {
   describe('Put', () => {
     it('should succeed when document is not found', done => {
       const id = 'aaaaaaaaaaaaaaaaaaaaaaaa';
-      const body = { test: true };
+      const expectedBody = { test: true };
 
       collection
-        .put({ id, body })
+        .put({ id, body: expectedBody })
         .then(res => {
-          should.deepEqual(res, { ...body, _id: helpers.db.ObjectId(id) });
+          should.deepEqual(res, {
+            ...expectedBody,
+            _id: helpers.db.ObjectId(id),
+          });
           done();
         })
         .catch(done);
     });
 
     it('should succeed when no id is given', done => {
-      const body = { test: true };
+      const expectedBody = { test: true };
 
       collection
-        .put({ body })
+        .put({ body: expectedBody })
         .then(res => {
-          const { _id, test } = res;
-          test.should.equal(true);
+          const { _id, ...body } = res;
+          should.deepEqual(body, expectedBody);
           _id.should.not.equal(null);
           done();
         })
@@ -317,22 +327,22 @@ describe('Collection items', () => {
     });
 
     it('should succeed when document is found', done => {
-      const body = { test: true };
+      const expectedBody = { test: false, status: 0 };
+      const addBody = { test: true };
       let id;
 
       collection
-        .add({ test: false, status: 0 })
+        .add(expectedBody)
         .then(res => {
-          const { _id, test, status } = res;
+          const { _id, ...body } = res;
           id = _id;
-          test.should.equal(false);
-          status.should.equal(0);
+          should.deepEqual(body, expectedBody);
 
-          return collection.put({ id: _id, body });
+          return collection.put({ id: _id, body: addBody });
         })
 
         .then(res => {
-          should.deepEqual(res, { ...body, _id: id });
+          should.deepEqual(res, { ...addBody, _id: id });
           done();
         })
         .catch(done);
@@ -390,11 +400,12 @@ describe('Collection items', () => {
 
   describe('Remove', () => {
     it('should succeed when document exists', done => {
+      const expectedBody = { test: true };
       collection
-        .add({ test: true })
+        .add(expectedBody)
         .then(res => {
-          const { _id, test } = res;
-          test.should.equal(true);
+          const { _id, ...body } = res;
+          should.deepEqual(body, expectedBody);
 
           return collection.remove(_id);
         })

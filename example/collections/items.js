@@ -4,7 +4,7 @@ const collection = db.db.collection('items');
 module.exports.add = body => {
   return new Promise((resolve, reject) => {
     collection
-      .insert(body)
+      .insert({ ...body })
       .then(res => {
         if (res.result.ok === 1 && res.result.n === 1) {
           return resolve(res.ops[0]);
