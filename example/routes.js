@@ -1,3 +1,5 @@
+const db = require('../src/db');
+
 const list = [
   {
     method: 'GET',
@@ -39,17 +41,40 @@ const list = [
     path: '/item/{id}',
     module: 'put.item',
   },
+  {
+    method: 'PATCH',
+    path: '/item/validate/{id}',
+    module: 'patch.item.validate',
+  },
 ];
 
 const routes = list.map(route => {
   const { method, path, module } = route;
   const mod = require(`./endpoints/${module}`);
-  const { handler } = mod;
+  const { handler, validate } = mod;
   const options = {
     method,
     path,
     handler,
+    config: {
+      pre: [
+        {
+          method: request => {
+            db.reconnect();
+            return request;
+          },
+        },
+      ],
+    },
   };
+
+  if (method !== 'GET') {
+    options.config.payload = { allow: 'application/json' };
+  }
+
+  if (validate) {
+    options.config.validate = validate;
+  }
 
   return options;
 });

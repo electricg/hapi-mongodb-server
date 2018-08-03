@@ -7,7 +7,7 @@
   "scripts": {
     "coverage": "rm -rf coverage && nyc mocha test/{**,**/*}/*.test.js",
     "dev": "./node_modules/.bin/nodemon example/server.js",
-    "giulia": "mocha test/src/db.test.js",
+    "giulia": "mocha test/example/endpoints/patch.item.validate.test.js",
     "start": "node example/server.js",
     "test": "npm run coverage"
   },
@@ -30,8 +30,7 @@
   "dependencies": {
     "hapi": "^17.5.2",
     "joi": "^13.4.0",
-    "mongoose": "^5.2.4",
-    "nconf": "^0.10.0"
+    "mongoose": "^5.2.4"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.6",
@@ -39,6 +38,7 @@
     "eslint-plugin-prettier": "^2.6.2",
     "mocha": "^5.2.0",
     "mockgoose": "^7.3.5",
+    "nconf": "^0.10.0",
     "nock": "^9.4.2",
     "nodemon": "^1.18.3",
     "nyc": "^12.0.2",
