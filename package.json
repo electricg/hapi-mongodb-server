@@ -1,7 +1,6 @@
 {
-  "name": "hapi-mongodb-server",
-  "private": true,
-  "version": "1.0.0",
+  "name": "@electricg/hapi-mongodb-server",
+  "version": "1.0.2",
   "description": "Basic API server made with hapi and MongoDB",
   "main": "src/index.js",
   "scripts": {
@@ -20,7 +19,11 @@
     "type": "git",
     "url": "git+https://github.com/electricg/hapi-mongodb-server.git"
   },
-  "keywords": [],
+  "keywords": [
+    "api",
+    "hapi",
+    "mongodb"
+  ],
   "author": "Giulia Alfonsi",
   "license": "MIT",
   "bugs": {

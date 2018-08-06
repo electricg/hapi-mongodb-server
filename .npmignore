@@ -1,0 +1,8 @@
+/.nyc_output
+/coverage
+/example
+/test
+.editorconfig
+.eslintignore
+.eslintrc
+nodemon.json
