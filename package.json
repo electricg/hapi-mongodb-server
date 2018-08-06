@@ -1,6 +1,6 @@
 {
   "name": "@electricg/hapi-mongodb-server",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Basic API server made with hapi and MongoDB",
   "main": "src/index.js",
   "scripts": {
