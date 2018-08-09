@@ -1,14 +1,12 @@
 const nconf = require('nconf');
 const utils = require('../src/utils');
 
-const pkg = require('../package');
-const { name } = pkg;
 const routes = require('./routes');
 
 const DEFAULT = {
   PORT: 8083,
   HOST: '127.0.0.1',
-  MONGODB_URI: `mongodb://localhost:27017/${name}`,
+  MONGODB_URI: `mongodb://localhost:27017/hapi-mongodb-server`,
   CLIENTS: '*',
 };
 
