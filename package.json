@@ -41,7 +41,7 @@
     "eslint-plugin-prettier": "^2.6.2",
     "mocha": "^5.2.0",
     "mockgoose": "^7.3.5",
-    "nconf": "^0.10.0",
+    "nconf": "^0.11.4",
     "nock": "^9.4.2",
     "nodemon": "^1.18.3",
     "nyc": "^12.0.2",
